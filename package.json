@@ -1,0 +1,42 @@
+{
+  "name": "vyntra-code",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Augment-like VS Code extension with multi-provider AI agents",
+  "author": "NEETPAL SINGH",
+  "license": "MIT",
+  "workspaces": [
+    "extension",
+    "webview",
+    "shared"
+  ],
+  "scripts": {
+    "install:all": "npm install && cd backend && pip install -r requirements.txt",
+    "dev": "npm-run-all --parallel watch:extension watch:webview",
+    "dev:extension": "npm run dev --workspace=extension",
+    "dev:webview": "npm run dev --workspace=webview",
+    "dev:backend": "cd backend && uvicorn main:app --reload --port 8000",
+    "build:shared": "npm run build --workspace=shared",
+    "build:extension": "npm run build:shared && npm run build --workspace=extension",
+    "build:webview": "npm run build:shared && npm run build --workspace=webview",
+    "build:all": "npm run build:shared && npm run build:webview && npm run build:extension",
+    "watch:shared": "npm run watch --workspace=shared",
+    "watch:extension": "npm run watch --workspace=extension",
+    "watch:webview": "npm run watch --workspace=webview",
+    "package": "npm run build:all && vsce package",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md}\""
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
