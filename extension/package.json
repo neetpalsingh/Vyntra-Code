@@ -1,0 +1,106 @@
+{
+  "name": "vyntra-code-extension",
+  "displayName": "Vyntra Code",
+  "description": "AI-powered coding assistant with multi-provider support and agent capabilities",
+  "version": "0.1.0",
+  "publisher": "neetpal",
+  "icon": "resources/icon.png",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "AI",
+    "Programming Languages",
+    "Machine Learning"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vyntra.openChat",
+        "title": "Open Chat",
+        "category": "Vyntra"
+      },
+      {
+        "command": "vyntra.explainCode",
+        "title": "Explain Selected Code",
+        "category": "Vyntra"
+      },
+      {
+        "command": "vyntra.refactorCode",
+        "title": "Refactor Selected Code",
+        "category": "Vyntra"
+      },
+      {
+        "command": "vyntra.generateTests",
+        "title": "Generate Tests",
+        "category": "Vyntra"
+      },
+      {
+        "command": "vyntra.runAgent",
+        "title": "Run Agent Task",
+        "category": "Vyntra"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "vyntra",
+          "title": "Vyntra Code",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "vyntra": [
+        {
+          "type": "webview",
+          "id": "vyntra.chatView",
+          "name": "Chat"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Vyntra Code",
+      "properties": {
+        "vyntra.backendUrl": {
+          "type": "string",
+          "default": "http://localhost:8000",
+          "description": "Vyntra backend URL"
+        },
+        "vyntra.defaultProvider": {
+          "type": "string",
+          "enum": ["openai", "anthropic", "gemini", "groq", "openrouter", "ollama"],
+          "default": "openai",
+          "description": "Default AI provider"
+        },
+        "vyntra.ragEnabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable RAG for semantic code search"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "dev": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.11.19",
+    "@vscode/test-electron": "^2.3.9",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@vyntra/shared": "*",
+    "axios": "^1.6.7"
+  }
+}
